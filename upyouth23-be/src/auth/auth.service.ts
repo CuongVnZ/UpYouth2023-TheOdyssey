@@ -33,6 +33,7 @@ export class AuthService {
       delete user.hash
       console.log(user)
       var rs = await this.signToken(user.id, user.email);
+      // console.log(rs);
       return {...rs, data: user};
     } catch (error) {
       if (
@@ -75,7 +76,9 @@ export class AuthService {
       );
 
     delete user.hash;
-    return [this.signToken(user.id, user.email), user];
+    var rs = await this.signToken(user.id, user.email);
+    // console.log(rs);
+    return {...rs, data: user};
   }
 
   async signToken(
@@ -91,7 +94,7 @@ export class AuthService {
     const token = await this.jwt.signAsync(
       payload,
       {
-        expiresIn: '15m',
+        expiresIn: '3d',
         secret: secret,
       },
     );

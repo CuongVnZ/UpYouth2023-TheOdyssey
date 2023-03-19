@@ -1,9 +1,11 @@
 import React from 'react';
+import {Map} from '@mui/icons-material';
+
 
 import { tagType, thirdweb } from '../assets';
 import { daysLeft } from '../utils';
 
-const FundCard = ({ owner, category, title, description, target, deadline, amountCollected, image, handleClick }) => {
+const FundCard = ({ owner, location, category, title, description, target, deadline, amountCollected, image, handleClick }) => {
   const remainingDays = daysLeft(deadline);
   
   return (
@@ -14,6 +16,8 @@ const FundCard = ({ owner, category, title, description, target, deadline, amoun
         <div className="flex flex-row items-center mb-[18px]">
           <img src={tagType} alt="tag" className="w-[17px] h-[17px] object-contain"/>
           <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px]">{category}</p>
+          <Map className="ml-[auto] w-[17px] h-[17px] object-contain"/>
+          <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px]">{location}</p>
         </div>
 
         <div className="block">
