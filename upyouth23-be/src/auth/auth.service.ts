@@ -3,7 +3,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { AuthDto } from './dto';
+import { AuthDto, RegisAuthDto } from './dto';
 import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { JwtService } from '@nestjs/jwt';
@@ -17,7 +17,7 @@ export class AuthService {
     private config: ConfigService,
   ) {}
 
-  async signup(dto: AuthDto) {
+  async signup(dto: RegisAuthDto) {
     // generate the password hash
     const hash = await argon.hash(dto.password);
     // save the new user in the db
@@ -26,10 +26,14 @@ export class AuthService {
         data: {
           email: dto.email,
           hash,
+          lastName: dto.lastName
         },
       });
 
-      return this.signToken(user.id, user.email);
+      delete user.hash
+      console.log(user)
+      var rs = await this.signToken(user.id, user.email);
+      return {...rs, data: user};
     } catch (error) {
       if (
         error instanceof
@@ -69,7 +73,9 @@ export class AuthService {
       throw new ForbiddenException(
         'Credentials incorrect',
       );
-    return this.signToken(user.id, user.email);
+
+    delete user.hash;
+    return [this.signToken(user.id, user.email), user];
   }
 
   async signToken(
