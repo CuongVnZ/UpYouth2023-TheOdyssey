@@ -6,11 +6,15 @@ import { CustomButton } from './';
 import { logo, menu, search, thirdweb } from '../assets';
 import { navlinks } from '../constants';
 
+import { useSelector } from "react-redux";
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState('dashboard');
   const [toggleDrawer, setToggleDrawer] = useState(false);
   const { connect, logged } = { connect: () => {}, logged: true};
+
+  const user = useSelector((state) => state.user.currentUser);
 
   return (
     <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
@@ -25,19 +29,19 @@ const Navbar = () => {
       <div className="sm:flex hidden flex-row justify-end gap-4">
         <CustomButton 
           btnType="button"
-          title={logged ? 'Create a campaign' : 'Login'}
-          styles={logged ? 'bg-[#8c6dfd]' : 'bg-black'}
+          title={user ? 'Create a campaign' : 'Login'}
+          styles={user ? 'bg-[#8c6dfd]' : 'bg-black'}
           handleClick={() => {
-            if(logged) navigate('create-campaign')
-            // else connect()
+            if(user) navigate('create-campaign')
+            else navigate('login')
           }}
         />
 
-        <Link to="/profile">
+        {user && (<Link to="/profile">
           <div className="w-[52px] h-[52px] rounded-full bg-[#2c2f32] flex justify-center items-center cursor-pointer">
             <img src={thirdweb} alt="user" className="w-[60%] h-[60%] object-contain" />
           </div>
-        </Link>
+        </Link>)}
       </div>
 
       {/* Small screen navigation */}
@@ -80,8 +84,8 @@ const Navbar = () => {
             <div className="flex mx-4">
             <CustomButton 
               btnType="button"
-              title={logged ? 'Create a campaign' : 'Connect'}
-              styles={logged ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
+              title={user ? 'Create a campaign' : 'Connect'}
+              styles={user ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
               handleClick={() => {
                 // if(address) navigate('create-campaign')
                 // else connect();
