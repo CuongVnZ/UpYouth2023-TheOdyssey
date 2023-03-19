@@ -3,22 +3,12 @@ services:
   dev-db:
     image: postgres:13
     ports:
-      - 5434:5431
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nest
     networks:
-      - theodyssey
-  test-db:
-    image: postgres:13
-    ports:
-      - 5435:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: nest
-    networks:
-      - theodyssey
+      - newport
 networks:
-  theodyssey:
+  newport:
