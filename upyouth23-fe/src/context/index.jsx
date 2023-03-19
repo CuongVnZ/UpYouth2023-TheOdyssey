@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from 'react';
 
-import campaigns from '.././campaigns.js';
+import {campaigns, organizations} from '../demodata.js';
 
 const StateContext = createContext();
 
@@ -61,20 +61,11 @@ export const StateContextProvider = ({ children }) => {
     return data;
   }
 
-  const getDonations = async (pId) => {
-    // const donations = await contract.call('getDonators', pId);
-    // const numberOfDonations = donations[0].length;
+  const getCreator = async (name) => {
 
-    // const parsedDonations = [];
-
-    // for(let i = 0; i < numberOfDonations; i++) {
-    //   parsedDonations.push({
-    //     donator: donations[0][i],
-    //     donation: ethers.utils.formatEther(donations[1][i].toString())
-    //   })
-    // }
-
-    return parsedDonations;
+    const org = await organizations.find((org) => org.name == name);
+    // console.log(org.name)
+    return organizations.find((org) => org.name == name).id;
   }
 
 
@@ -88,7 +79,7 @@ export const StateContextProvider = ({ children }) => {
         getCampaigns,
         getUserCampaigns,
         donate,
-        getDonations
+        getCreator
       }}
     >
       {children}

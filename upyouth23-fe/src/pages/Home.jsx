@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { DisplayCampaigns } from '../components';
+import { DisplayCampaigns, Filters } from '../components';
 import { useStateContext } from '../context'
 
 const Home = () => {
@@ -29,13 +29,16 @@ const Home = () => {
     if(contract) fetchCampaigns();
   }, [address, contract]);
 
+  function handleFilter(filters) {
+    console.log(filters)
+  }
+
   return (
-    <DisplayCampaigns 
-      title="All Campaigns"
-      isLoading={isLoading}
-      campaigns={campaigns}
-    />
-  )
+    <div>
+      <Filters onFilter={handleFilter} />
+      <DisplayCampaigns title="All Campaigns" isLoading={isLoading} campaigns={campaigns} />
+    </div>
+  );
 }
 
 export default Home

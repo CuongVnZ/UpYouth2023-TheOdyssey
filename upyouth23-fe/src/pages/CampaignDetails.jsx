@@ -10,24 +10,32 @@ import { thirdweb } from '../assets';
 const CampaignDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { donate, getDonations, contract, address } = useStateContext();
+  const { donate, getCreator, contract, address } = useStateContext();
   // const { donate, getDonations, contract, address } = null;
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState('');
   const [donators, setDonators] = useState([]);
+  const [creatorId, setCreatorId] = useState(0);
 
   const remainingDays = daysLeft(state.deadline);
 
   const fetchDonators = async () => {
-    const data = await getDonations(state.pId);
+    
+    setDonators(state.donators);
+  }
 
-    setDonators(data);
+  const fetchCreator = async () => {
+    var oid = await getCreator(state.owner);
+    // console.log(creatorId)
+    setCreatorId(oid);
+    // console.log(creatorId);
   }
 
   useEffect(() => {
     if(contract) fetchDonators();
-  }, [contract, address])
+    fetchCreator();
+  }, [creatorId, donators])
 
   const handleDonate = async () => {
     setIsLoading(true);
@@ -53,7 +61,7 @@ const CampaignDetails = () => {
 
         <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
           <CountBox title="Days Left" value={remainingDays} />
-          <CountBox title={`Raised of ${state.target}`} value={state.amountCollected} />
+          <CountBox title={`Raised of $${state.target}`} value={"$"+state.amountCollected} />
           <CountBox title="Total Backers" value={donators.length} />
         </div>
       </div>
@@ -68,8 +76,15 @@ const CampaignDetails = () => {
                 <img src={thirdweb} alt="user" className="w-[60%] h-[60%] object-contain"/>
               </div>
               <div>
-                <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">{state.owner}</h4>
+                <h4 className="font-epilogue font-semibold text-[14px] break-all">{state.owner}</h4>
                 <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">10 Campaigns</p>
+              </div>
+              <div>
+                <CustomButton
+                  title="View"
+                  styles="bg-[#4acd8d] text-[#fff] font-epilogue font-semibold text-[14px] px-[20px] py-[10px] rounded-[10px]"
+                  handleClick={() => navigate('/organizations/'+creatorId)}
+                />
               </div>
             </div>
           </div>
@@ -89,7 +104,7 @@ const CampaignDetails = () => {
                 {donators.length > 0 ? donators.map((item, index) => (
                   <div key={`${item.donator}-${index}`} className="flex justify-between items-center gap-4">
                     <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">{index + 1}. {item.donator}</p>
-                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
+                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">${item.donation}</p>
                   </div>
                 )) : (
                   <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No donators yet. Be the first one!</p>
@@ -99,9 +114,9 @@ const CampaignDetails = () => {
         </div>
 
         <div className="flex-1">
-          <h4 className="font-epilogue font-semibold text-[18px] uppercase">Fund</h4>   
-
-          <div className="mt-[20px] flex flex-col p-4 bg-white rounded-[10px]">
+          <h4 className="font-epilogue font-semibold text-[18px] uppercase">Status: {state.status}</h4>   
+          {state.status != "Ended" && (
+          <div className="mt-[20px] flex flex-col p-4 bg-white rounded-[10px] shadow-md">
             <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center ">
               Fund the campaign
             </p>
@@ -128,6 +143,7 @@ const CampaignDetails = () => {
               />
             </div>
           </div>
+          )}
         </div>
       </div>
     </div>

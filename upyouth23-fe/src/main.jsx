@@ -7,13 +7,21 @@ import { StateContextProvider } from './context';
 import App from './App';
 import './index.css';
 
+import {Provider} from "react-redux";
+import {store, persistor} from "./redux/store";
+import { PersistGate } from 'redux-persist/integration/react';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   // <ThirdwebProvider desiredChainId={ChainId.Goerli}> 
     <Router>
       <StateContextProvider>
-        <App />
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+              <App />
+          </PersistGate>
+        </Provider>
       </StateContextProvider>
     </Router>
   // </ThirdwebProvider> 

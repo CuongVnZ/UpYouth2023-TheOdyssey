@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../redux/apiCalls';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { isFetching, error } = useSelector((state) => state.user)
+
+  const dispatch = useDispatch()
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-  };
+      e.preventDefault()
+      login(dispatch, { email, password })
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -92,6 +98,7 @@ const Login = () => {
               <button
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                disabled={isFetching}
               >
                 Log in
               </button>
