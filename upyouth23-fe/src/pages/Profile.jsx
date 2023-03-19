@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DisplayCampaigns } from '../components';
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -9,6 +10,8 @@ const Profile = () => {
   const [nameInput, setNameInput] = useState(profile.name);
   const [emailInput, setEmailInput] = useState(profile.email);
   const [donationHistory, setDonationHistory] = useState([]);
+
+  const user = useSelector((state) => state.user.currentUser);
 
   const handleNameChange = (event) => {
     setNameInput(event.target.value);
@@ -34,6 +37,9 @@ const Profile = () => {
       { id: 2, amount: 100, date: '2022-11-15' },
       { id: 3, amount: 25, date: '2023-01-20' }
     ]);
+
+    setProfile(user);
+
   }, []);
 
   return (
