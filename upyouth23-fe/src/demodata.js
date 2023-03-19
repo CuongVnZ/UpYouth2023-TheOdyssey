@@ -7,7 +7,7 @@ export const campaigns = [
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, purus ac ornare rutrum, neque nulla tempus diam, at laoreet orci lectus lacinia augue. Vivamus diam quam, semper vitae turpis vel, lacinia scelerisque libero. Duis a lorem sapien. Duis quis ultricies magna. Proin sed quam eu ante molestie pretium. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum eu purus tristique, pulvinar nibh vitae, maximus ante. Pellentesque commodo dapibus ornare. Sed arcu dolor, pellentesque nec tempus a, porta eget lectus. Sed lacinia vitae est nec commodo. Etiam ipsum mi, tincidunt quis augue ut, fringilla vestibulum lacus. Mauris elementum rhoncus dui, vitae imperdiet ante interdum vitae. In in urna quis mauris viverra tincidunt id eget felis.", 
         owner: "Charity A",
         target: 100, 
-        amountCollected: 50, 
+        amountCollected: 75, 
         deadline: 1680195600000,
         donators: [
             {
@@ -52,7 +52,7 @@ export const campaigns = [
         owner: "Charity B",
         target: 100,
         amountCollected: 100,
-        deadline: 160000000000,
+        deadline: 1678813200000,
         donators: [
           {
             donator: "Nguyen Van C",
@@ -77,6 +77,21 @@ export const campaigns = [
         ],
         status: "Ended"
     },
+    {
+      pId: 4,
+      title: 'Help homeless people to have a place to live',
+      category: 'Homeless',
+      image: 'https://donorbox.org/nonprofit-blog/wp-content/uploads/2022/03/2022-JanFebMar-blog-images-2-1-5.png',
+      description: "This is a very simple story.", 
+      owner: "Charity D",
+      target: 0,
+      amountCollected: 500,
+      deadline: 1684482253000,
+      donators: [
+
+      ],
+      status: "In Progress"
+  },
 ]
 
 export const organizations = [

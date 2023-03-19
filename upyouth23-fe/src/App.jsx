@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 
 import { Sidebar, Navbar } from './components';
 import { 
-  CampaignDetails, CreateCampaign, Home, Profile, 
+  CampaignDetails, CreateCampaign, Home, Profile, Success,
   Register, Login, 
   Organizations, Organization 
 } from './pages';
@@ -33,6 +33,7 @@ const App = () => {
           <Route path="/login" element={user ? <Navigate to="/" /> : <Login />}/>
           <Route path="/register" element={user ? <Navigate to="/" /> : <Register />}/>
           <Route path="/profile" element={!user ? <Navigate to="/" /> : <Profile />}/>
+          <Route path="/success" element={!user ? <Navigate to="/" /> : <Success />}/>
         </Routes>
       </div>
     </div>

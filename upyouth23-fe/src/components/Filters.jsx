@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 const categories = ['Technology', 'Education', 'Environment', 'Health'];
-const organizations = ['Organization 1', 'Organization 2', 'Organization 3', 'Organization 4'];
+const organizations = ['Charity A', 'Charity B', 'Charity C', 'Saigon Children’s Charity CIO'];
 const statuses = ['Open', 'Closed', 'Pending', 'Cancelled'];
+const locations = ['Ha Noi', 'Da Nang', 'Ho Chi Minh'];
 
 const Filters = ({ onFilter }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -67,6 +68,20 @@ const Filters = ({ onFilter }) => {
             {statuses.map((status) => (
               <option key={status} value={status}>
                 {status}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="relative inline-flex">
+          <select
+            className="rounded-r-full bg-gray-100 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            value={selectedStatus}
+            onChange={(e) => handleStatusSelect(e.target.value)}
+          >
+            <option value="">Locations</option>
+            {locations.map((location) => (
+              <option key={location} value={location}>
+                {location}
               </option>
             ))}
           </select>

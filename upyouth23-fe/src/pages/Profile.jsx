@@ -38,14 +38,14 @@ const Profile = () => {
       { id: 3, amount: 25, date: '2023-01-20' }
     ]);
 
-    setProfile(user);
+    setProfile(user.data);
 
   }, []);
 
   return (
     <div className="bg-white flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4">
       <div className="max-w-3xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-4">{profile.name}'s Profile</h1>
+        <h1 className="text-3xl font-bold mb-4">{profile.lastName}'s Profile</h1>
 
         <form onSubmit={handleSave} className="mb-8">
           <div className="mb-4">
@@ -54,7 +54,7 @@ const Profile = () => {
               type="text"
               id="name-input"
               className="w-full border rounded py-2 px-3"
-              value={nameInput}
+              value={profile.firstName + " " + profile.lastName}
               onChange={handleNameChange}
             />
           </div>
@@ -64,7 +64,7 @@ const Profile = () => {
               type="email"
               id="email-input"
               className="w-full border rounded py-2 px-3"
-              value={emailInput}
+              value={profile.email}
               onChange={handleEmailChange}
             />
           </div>

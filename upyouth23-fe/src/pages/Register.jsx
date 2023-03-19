@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -9,6 +10,35 @@ const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // handle registration logic here
+  };
+
+
+  const [inputs, setInputs] = useState({});
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+      e.preventDefault()
+
+      const register = async () => {
+          try {
+              var res = await publicRequest.post("/auth/signup", {
+                  ...inputs,
+                  balance: 0
+              })
+              console.log(res)
+              navigate("/login")
+          } catch {}
+      };
+      register();
+  }
+
+  const handleChange = (e) => {
+      setInputs((prev) => {
+        return { ...prev, [e.target.name]: e.target.value };
+      });
+      console.log(inputs)
   };
 
   return (

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStateContext } from '../context';
 import { money } from '../assets';
 import { CustomButton, FormField, Loader } from '../components';
-// import { checkIfImage } from '../utils';
+import { checkIfImage } from '../utils';
 
 const CreateCampaign = () => {
   const navigate = useNavigate();
@@ -27,17 +27,20 @@ const CreateCampaign = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // checkIfImage(form.image, async (exists) => {
-    //   if(exists) {
-    //     setIsLoading(true)
-    //     await createCampaign({ ...form, target: ethers.utils.parseUnits(form.target, 18)})
-    //     setIsLoading(false);
-    //     navigate('/');
-    //   } else {
-    //     alert('Provide valid image URL')
-    //     setForm({ ...form, image: '' });
-    //   }
-    // })
+    checkIfImage(form.image, async (exists) => {
+      if(exists) {
+        setIsLoading(true)
+        // await createCampaign({ ...form, target: ethers.utils.parseUnits(form.target, 18)})
+        // convert date time to timestamp
+        // form = { ...form, deadline: new Date(form.deadline).getTime() }
+        // console.log('form', form)
+        setIsLoading(false);
+        navigate('/');
+      } else {
+        alert('Provide valid image URL')
+        setForm({ ...form, deadline: new Date(form.deadline).getTime(), image: '' });
+      }
+    })
   }
 
   return (
@@ -81,7 +84,7 @@ const CreateCampaign = () => {
         <div className="flex flex-wrap gap-[40px]">
           <FormField 
             labelName="Goal *"
-            placeholder="ETH 0.50"
+            placeholder="$500"
             inputType="text"
             value={form.target}
             handleChange={(e) => handleFormFieldChange('target', e)}

@@ -7,11 +7,20 @@ import { CountBox, CustomButton, Loader } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
 import { thirdweb } from '../assets';
 
+import { logout } from "../redux/userRedux"
+import { useSelector, useDispatch } from 'react-redux';
+
 const CampaignDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { donate, getCreator, contract, address } = useStateContext();
-  // const { donate, getDonations, contract, address } = null;
+  
+  const user = useSelector(state => state.user.currentUser)
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+      dispatch(logout())
+  }
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState('');
@@ -40,10 +49,14 @@ const CampaignDetails = () => {
   const handleDonate = async () => {
     setIsLoading(true);
 
-    await donate(state.pId, amount); 
+    // await donate(state.pId, amount); 
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate('/success');
+    }, 3000);
 
-    navigate('/')
-    setIsLoading(false);
+    // navigate('/')
+    // setIsLoading(false);
   }
 
   return (
@@ -69,6 +82,10 @@ const CampaignDetails = () => {
       <div className="mt-[60px] flex lg:flex-row flex-col gap-5">
         <div className="flex-[2] flex flex-col gap-[40px]">
           <div>
+            {/* Title */}
+            <h1 className="font-epilogue font-semibold text-[36px]">{state.title}</h1>
+            
+
             <h4 className="font-epilogue font-semibold text-[18px] uppercase">Creator</h4>
 
             <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
@@ -103,7 +120,7 @@ const CampaignDetails = () => {
               <div className="mt-[20px] flex flex-col gap-4">
                 {donators.length > 0 ? donators.map((item, index) => (
                   <div key={`${item.donator}-${index}`} className="flex justify-between items-center gap-4">
-                    <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">{index + 1}. {item.donator}</p>
+                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{index + 1}. {item.donator}</p>
                     <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">${item.donation}</p>
                   </div>
                 )) : (

@@ -8,7 +8,7 @@ export const login = async (dispatch, user)=>{
         const res = await publicRequest.post("/auth/signin", user)
         dispatch(loginSuccess(res.data))
         
-        window.location.reload(false);
+        // window.location.reload(false);
     }catch(err){
         console.log(err)
         dispatch(loginFailure());
